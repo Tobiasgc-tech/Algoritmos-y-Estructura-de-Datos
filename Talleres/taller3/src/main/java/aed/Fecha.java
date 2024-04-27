@@ -21,11 +21,12 @@ public class Fecha {
         return _mes;
     }
 
+    @Override
     public String toString() {
         StringBuffer sbuffer = new StringBuffer();
-        sbuffer.append(dia().toString());
+        sbuffer.append(dia());
         sbuffer.append("/");
-        sbuffer.append(mes().toString());
+        sbuffer.append(mes());
         return sbuffer.toString();
     }
 
