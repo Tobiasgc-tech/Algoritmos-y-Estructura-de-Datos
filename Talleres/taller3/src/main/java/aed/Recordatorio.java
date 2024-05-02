@@ -24,12 +24,26 @@ public class Recordatorio {
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("No implementada aun");
+        StringBuffer sbuffer = new StringBuffer();
+        sbuffer.append(mensaje());
+        sbuffer.append(" @ ");
+        sbuffer.append(fecha());
+        sbuffer.append(" ");
+        sbuffer.append(horario());
+        return sbuffer.toString();
     }
 
     @Override
     public boolean equals(Object otro) {
-        throw new UnsupportedOperationException("No implementada aun");
+        boolean oen = (otro == null);
+        boolean cd = otro.getClass() != this.getClass();
+        if (oen || cd) {
+        return false;
+        }
+        Recordatorio otroRecordatorio = (Recordatorio) otro;
+        return _mensaje == otroRecordatorio._mensaje 
+            && _fecha == otroRecordatorio._fecha
+            && _horario == otroRecordatorio._horario;
     }
 
 }

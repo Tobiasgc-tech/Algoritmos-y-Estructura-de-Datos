@@ -1,7 +1,7 @@
 package aed;
 
 class ArregloRedimensionableDeRecordatorios implements SecuenciaDeRecordatorios {
-
+    private int _longitud;
     public ArregloRedimensionableDeRecordatorios() {
         throw new UnsupportedOperationException("No implementada aun");
     }
@@ -11,7 +11,7 @@ class ArregloRedimensionableDeRecordatorios implements SecuenciaDeRecordatorios 
     }
 
     public int longitud() {
-        throw new UnsupportedOperationException("No implementada aun");
+        return _longitud;
     }
 
     public void agregarAtras(Recordatorio i) {
