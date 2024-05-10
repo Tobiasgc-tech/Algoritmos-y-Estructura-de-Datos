@@ -2,8 +2,11 @@ package aed;
 
 class ArregloRedimensionableDeRecordatorios implements SecuenciaDeRecordatorios {
     private int _longitud;
+    private Recordatorio[] _lista;
+    private int _capacidad = 20; 
     public ArregloRedimensionableDeRecordatorios() {
-        throw new UnsupportedOperationException("No implementada aun");
+        this._lista = new Recordatorio[_capacidad];
+        this._longitud = 0;
     }
 
     public ArregloRedimensionableDeRecordatorios(ArregloRedimensionableDeRecordatorios vector) {
@@ -15,15 +18,16 @@ class ArregloRedimensionableDeRecordatorios implements SecuenciaDeRecordatorios 
     }
 
     public void agregarAtras(Recordatorio i) {
-        throw new UnsupportedOperationException("No implementada aun");
+        _lista[_longitud] = i;
+        _longitud++;
     }
 
     public Recordatorio obtener(int i) {
-        throw new UnsupportedOperationException("No implementada aun");
+        return _lista[i];
     }
 
     public void quitarAtras() {
-        throw new UnsupportedOperationException("No implementada aun");
+        _longitud--;
     }
 
     public void modificarPosicion(int indice, Recordatorio valor) {
