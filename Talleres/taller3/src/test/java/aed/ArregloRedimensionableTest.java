@@ -23,6 +23,7 @@ class ArregloRedimensionableTest {
         vector.agregarAtras(new Recordatorio("4", new Fecha(1, 4), new Horario(0, 3)));
         vector.agregarAtras(new Recordatorio("5", new Fecha(1, 5), new Horario(0, 4)));
 
+        
         assertEquals(5, vector.longitud());
 
         assertEquals(new Recordatorio("1", new Fecha(1, 1), new Horario(0, 0)), vector.obtener(0));

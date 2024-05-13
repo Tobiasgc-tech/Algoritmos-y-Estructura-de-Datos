@@ -8,10 +8,6 @@ public class Fecha {
         this._mes = mes;
     }
 
-    public Fecha(Fecha fecha) {
-        this._dia = fecha.dia();
-        this._mes = fecha.mes();
-    }
 
     public Integer dia() {
         return _dia;

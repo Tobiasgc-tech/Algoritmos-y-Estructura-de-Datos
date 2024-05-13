@@ -3,14 +3,18 @@ package aed;
 class ArregloRedimensionableDeRecordatorios implements SecuenciaDeRecordatorios {
     private int _longitud;
     private Recordatorio[] _lista;
-    private int _capacidad = 20; 
     public ArregloRedimensionableDeRecordatorios() {
-        this._lista = new Recordatorio[_capacidad];
         this._longitud = 0;
+        this._lista = new Recordatorio[1];
     }
 
     public ArregloRedimensionableDeRecordatorios(ArregloRedimensionableDeRecordatorios vector) {
-        throw new UnsupportedOperationException("No implementada aun");
+        this._longitud = vector._longitud;
+        this._lista = new Recordatorio[vector._lista.length];
+        for (int i = 0; i < vector._longitud; i++) {
+            this._lista[i] = vector._lista[i];
+        }
+
     }
 
     public int longitud() {
@@ -18,6 +22,14 @@ class ArregloRedimensionableDeRecordatorios implements SecuenciaDeRecordatorios 
     }
 
     public void agregarAtras(Recordatorio i) {
+        if (_longitud == _lista.length) {
+            int _nuevaCapacidad = _lista.length * 2;
+            Recordatorio[] listaNueva = new Recordatorio[_nuevaCapacidad];
+            for (int n = 0; n < _longitud; n++) {
+                listaNueva[n] = _lista[n];
+            }
+            _lista = listaNueva;    
+        }
         _lista[_longitud] = i;
         _longitud++;
     }
@@ -36,14 +48,12 @@ class ArregloRedimensionableDeRecordatorios implements SecuenciaDeRecordatorios 
     }
 
     public ArregloRedimensionableDeRecordatorios copiar() {
-        ArregloRedimensionableDeRecordatorios _copia = new ArregloRedimensionableDeRecordatorios();
-        Recordatorio[] _copiaLista = new Recordatorio[_longitud];
-        _copia._longitud = _longitud;
-        _copia._capacidad = _capacidad;
-        for(int i = 0; i < _longitud; i++){
-            _copiaLista[i] = _lista[i];
-        } 
-        return _copia;
-    }
-
+        ArregloRedimensionableDeRecordatorios copia = new ArregloRedimensionableDeRecordatorios();
+        copia._longitud = _longitud;
+        copia._lista = new Recordatorio[_longitud];
+        for (int i = 0; i < _longitud; i++){
+            copia._lista[i] = _lista[i];
+            }
+        return copia;
+        }
 }
