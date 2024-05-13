@@ -31,12 +31,19 @@ class ArregloRedimensionableDeRecordatorios implements SecuenciaDeRecordatorios 
     }
 
     public void modificarPosicion(int indice, Recordatorio valor) {
-        throw new UnsupportedOperationException("No implementada aun");
+        _lista[indice] = valor;
 
     }
 
     public ArregloRedimensionableDeRecordatorios copiar() {
-        throw new UnsupportedOperationException("No implementada aun");
+        ArregloRedimensionableDeRecordatorios _copia = new ArregloRedimensionableDeRecordatorios();
+        Recordatorio[] _copiaLista = new Recordatorio[_longitud];
+        _copia._longitud = _longitud;
+        _copia._capacidad = _capacidad;
+        for(int i = 0; i < _longitud; i++){
+            _copiaLista[i] = _lista[i];
+        } 
+        return _copia;
     }
 
 }

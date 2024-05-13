@@ -41,9 +41,9 @@ public class Recordatorio {
         return false;
         }
         Recordatorio otroRecordatorio = (Recordatorio) otro;
-        return _mensaje == otroRecordatorio._mensaje 
-            && _fecha == otroRecordatorio._fecha
-            && _horario == otroRecordatorio._horario;
+        return _mensaje.equals(otroRecordatorio._mensaje)
+        && _fecha.equals(otroRecordatorio._fecha)
+        && _horario.equals(otroRecordatorio._horario);
     }
 
 }
