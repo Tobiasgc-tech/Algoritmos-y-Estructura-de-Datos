@@ -151,12 +151,12 @@ class ListaEnlazadaTests {
         lista.agregarAtras(44);
         lista.agregarAtras(45);
 
-        lista.modificarPosicion(2, 27);
+        lista.modificarPosicion(1, 27);
 
         assertEquals(4, lista.longitud());
         assertEquals(42, lista.obtener(0));
-        assertEquals(43, lista.obtener(1));
-        assertEquals(27, lista.obtener(2));
+        assertEquals(27, lista.obtener(1));
+        assertEquals(44, lista.obtener(2));
         assertEquals(45, lista.obtener(3));
 
     }
