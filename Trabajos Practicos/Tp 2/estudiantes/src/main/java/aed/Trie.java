@@ -1,64 +1,59 @@
 package aed;
 import java.util.ArrayList;
 
-public class Trie<T> implements Diccionario<T> {
+public class Trie<T> {
     private Nodo<T> raiz;
     private int largo;
 
     private static class Nodo<T> {
-        ArrayList<Nodo<T>> siguientes; //utilizo la clase ya dada por java ArrayList que permite trabajar con tipos T
+        ArrayList<Nodo<T>> siguientes;
         T valor;
 
-        public Nodo() { //constructor de la clase Nodo
-            siguientes = new ArrayList<>(256); //inicializo con el tamano del Array que voy a necesitar(ASCII)
-            for (int i = 0; i < 256; i++) { //seteo en null todos sus valores(chequear)
+        public Nodo() {
+            siguientes = new ArrayList<>(256);
+            for (int i = 0; i < 256; i++) {
                 siguientes.add(null); 
             }
-            valor = null; // Inicializa el valor como null
+            valor = null;
         }
     }
 
-    public Trie() { //constructor de la clase Nodo
-        raiz = new Nodo<>();
+    public Trie() {
+        raiz = null;
         largo = 0;
     }
 
-    public int tamano(){
+    public int tamaño(){
         return largo;
     }
-
-    //metodo substring(index) me permite quedarme con una parte del satring comenzando desde index. Lo vamos a usar
-    //para hacer la funcion recursiva quedandonos con todos los caracteres excepto el primero
-
-    //metodo charAt(index) nos devuelve el caracter en la poscion index. Lo vamos a usar para ver el primer caracter
     
     public boolean esta(String clave) {
-        Nodo<T> nodo = get(raiz, clave);
+        Nodo<T> nodo = obtenerNodo(raiz, clave);
         return nodo != null && nodo.valor != null;
     }
 
-    public void insert(String clave, T valor) {
-        raiz = insert(raiz, clave, valor);
+    public void insertar(String clave, T valor) {
+        raiz = insertar(raiz, clave, valor);
     }
 
-    private Nodo<T> insert(Nodo<T> nodo, String clave, T valor) {
+    private Nodo<T> insertar(Nodo<T> nodo, String clave, T valor) {
         if (nodo == null) {
             nodo = new Nodo<>();
         }
-        if (clave.isEmpty()) { //termino cuando termine la clave
+        if (clave.isEmpty()) {
             if (nodo.valor == null) {
                 largo++;
             }
             nodo.valor = valor;
             return nodo;
         }
-        int caracter = (int) clave.charAt(0); //primera letra de clave
-        nodo.siguientes.set(caracter, insert(nodo.siguientes.get(caracter), clave.substring(1), valor));
+        int caracter = (int) clave.charAt(0);
+        nodo.siguientes.set(caracter, insertar(nodo.siguientes.get(caracter), clave.substring(1), valor));
         return nodo;
     }
 
-    public T get(String clave) {
-        Nodo<T> nodo = get(raiz, clave);
+    public T obtenerValor(String clave) {
+        Nodo<T> nodo = obtenerNodo(raiz, clave);
         if (nodo != null && nodo.valor != null) {
             return nodo.valor;
         } else {
@@ -66,23 +61,23 @@ public class Trie<T> implements Diccionario<T> {
         }
     }
 
-    private Nodo<T> get(Nodo<T> nodo, String clave) {
+    private Nodo<T> obtenerNodo(Nodo<T> nodo, String clave) {
         if (nodo == null) {
             return null;
         }
-        if (clave.isEmpty()) {//para cuando termino la clave
+        if (clave.isEmpty()) {
             return nodo;
         }
-        int caracter = (int) clave.charAt(0); //primera letra de clave
-        nodo = nodo.siguientes.get(caracter); //voy al nodo con la primera letra(nodo siguiente)
-        return get(nodo, clave.substring(1)); //recursion tomando ahora la clave sin la primer letra
+        int caracter = (int) clave.charAt(0);
+        nodo = nodo.siguientes.get(caracter);
+        return obtenerNodo(nodo, clave.substring(1));
     }
 
-    public void delete(String clave) {
-        raiz = delete(raiz, clave);
+    public void borrar(String clave) {
+        raiz = borrar(raiz, clave);
     }
 
-    private Nodo<T> delete(Nodo<T> nodo, String clave) {
+    private Nodo<T> borrar(Nodo<T> nodo, String clave) {
         if (nodo == null) {
             return null;
         }
@@ -93,9 +88,8 @@ public class Trie<T> implements Diccionario<T> {
             }
         } else {
             int caracter = (int) clave.charAt(0);
-            nodo.siguientes.set(caracter, delete(nodo.siguientes.get(caracter), clave.substring(1)));
+            nodo.siguientes.set(caracter, borrar(nodo.siguientes.get(caracter), clave.substring(1)));
         }
-        // Eliminar nodos vacíos innecesarios
         if (nodo.valor == null) {
             boolean tieneHijos = false;
             for (Nodo<T> siguiente : nodo.siguientes) {
@@ -110,25 +104,25 @@ public class Trie<T> implements Diccionario<T> {
         }
         return nodo;
     }
-
-    public String[] toStringArray() {
-        ArrayList<String> elements = new ArrayList<>();
-        toStringAux(raiz, "", elements);
-        return elements.toArray(new String[0]);
+    
+    public String[] obtenerClaves() {
+        ArrayList<String> claves = new ArrayList<>();
+        obtenerClaves(raiz, "", claves);
+        return claves.toArray(new String[0]);
     }
 
-    private void toStringAux(Nodo<T> nodo, String prefix, ArrayList<String> elements) {
-        if (nodo != null) {
-            if (nodo.valor != null) {
-                elements.add(prefix);
-            }
-            for (int i = 0; i < nodo.siguientes.size(); i++) {
-                if (nodo.siguientes.get(i) != null) {
-                    char ch = (char) i;
-                    toStringAux(nodo.siguientes.get(i), prefix + ch, elements);
-                }
+    private void obtenerClaves(Nodo<T> nodo, String prefijo, ArrayList<String> claves) {
+        if (nodo == null) {
+            return;
+        }
+        if (nodo.valor != null) {
+            claves.add(prefijo);
+        }
+        for (int i = 0; i < 256; i++) {
+            Nodo<T> siguiente = nodo.siguientes.get(i);
+            if (siguiente != null) {
+                obtenerClaves(siguiente, prefijo + (char) i, claves);
             }
         }
     }
 }
-    
