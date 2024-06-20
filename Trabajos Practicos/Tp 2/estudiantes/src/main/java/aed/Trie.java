@@ -54,11 +54,8 @@ public class Trie<T> {
 
     public T obtenerValor(String clave) {
         Nodo<T> nodo = obtenerNodo(raiz, clave);
-        if (nodo != null && nodo.valor != null) {
-            return nodo.valor;
-        } else {
-            return null;
-        }
+        return nodo.valor;
+
     }
 
     private Nodo<T> obtenerNodo(Nodo<T> nodo, String clave) {
@@ -87,7 +84,7 @@ public class Trie<T> {
                 nodo.valor = null;
             }
         } else {
-            int caracter = (int) clave.charAt(0);
+            char caracter = clave.charAt(0);
             nodo.siguientes.set(caracter, borrar(nodo.siguientes.get(caracter), clave.substring(1)));
         }
         if (nodo.valor == null) {

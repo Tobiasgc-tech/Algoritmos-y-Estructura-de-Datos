@@ -1,7 +1,5 @@
 package aed;
 
-import java.util.ArrayList;
-
 public class SistemaSIU {
 
     private Trie<Estudiante> estudiantes;
@@ -15,7 +13,7 @@ public class SistemaSIU {
     }
 
     public SistemaSIU(InfoMateria[] infoMaterias, String[] libretasUniversitarias) {
-        this.estudiantes = new Trie<>();
+        this.estudiantes = new Trie<>(); 
         for (String libreta : libretasUniversitarias) {
             estudiantes.insertar(libreta, new Estudiante());
         }
@@ -24,11 +22,12 @@ public class SistemaSIU {
             ParCarreraMateria[] materiaPorCarrera = infoDeMismaMateria.getParesCarreraMateria();
             Materia infoMismaMateriaDistintoNombre = new Materia(materiaPorCarrera.length, libretasUniversitarias.length);
             for (ParCarreraMateria par : materiaPorCarrera) {
-                Carrera carrera = carreras.obtenerValor(par.getCarrera());
-                if (carrera == null) {
-                    carrera = new Carrera(par.getCarrera());
+                Boolean estaLaCarrera = carreras.esta(par.getCarrera());
+                if (estaLaCarrera == false) {
+                    Carrera carrera = new Carrera(par.getCarrera());
                     carreras.insertar(par.getCarrera(), carrera);
                 }
+                Carrera carrera = carreras.obtenerValor(par.getCarrera());
                 infoMismaMateriaDistintoNombre.agregarMateriasEquivalentes(par.getNombreMateria(), carrera.getMaterias());
                 carrera.agregarMateria(par.getNombreMateria(), infoMismaMateriaDistintoNombre);
             }
